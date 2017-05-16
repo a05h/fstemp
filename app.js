@@ -1,25 +1,32 @@
 var http = require('http'),
     fs = require('fs'),
     express = require('express'),
-    bodyParser = require('body-parser');
+    router = require('./modules/router');
 
 var app = express();
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
 app.set('view engine', 'ejs');
-app.use('/assets', express.static('public'));
+app.use(express.static('./public/styles'));
 
-app.get('/', (req, res) => {
-  res.render('index', {thisPage: 'index'});
-  console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
-});
+//app.get('/', (req, res) => {
+//  res.render('index', {thisPage: 'index'});
+//  console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
+//});
+//
+//app.get('/contacts', (req, res) => {
+//  res.render('contacts', {qs: req.query});
+//  console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
+//  console.log(req.body);
+//});
+//
+//app.post('/contacts', urlencodedParser, (req, res) => {
+//  res.render('contacts', {qs: req.query});
+//  console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
+//  console.log(req.body);
+//});
+//
 
-app.post('/contacts', urlencodedParser, (req, res) => {
-  res.render('contacts', {qs: req.query});
-  console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
-  console.log(req.body);
-});
+router(app);
 
 app.listen(3000, '127.0.0.1');
 
