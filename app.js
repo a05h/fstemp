@@ -1,26 +1,26 @@
-var http = require('http');
-var fs = require('fs');
-var router = require('./modules/router.js');
+var http = require('http'),
+    fs = require('fs'),
+    express = require('express'),
+    bodyParser = require('body-parser');
 
+var app = express();
 
-var server = http.createServer((req, res) => {
-  switch (req.url) {
-    case '/':
-    case '/index':
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      fs.createReadStream(__dirname + '/public/index.html').pipe(res);
-      break;
-    case '/contacts':
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      fs.createReadStream(__dirname + '/public/contacts.html').pipe(res);
-      break;
-    default:
-      res.writeHead(404, {'Content-Type': 'text/html'});
-      fs.createReadStream(__dirname + '/public/404.html').pipe(res);
-      break;
-  }
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.set('view engine', 'ejs');
+app.use('/assets', express.static('public'));
+
+app.get('/', (req, res) => {
+  res.render('index', {thisPage: 'index'});
   console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
-  
-}).listen(3000, '127.0.0.1');
+});
+
+app.post('/contacts', urlencodedParser, (req, res) => {
+  res.render('contacts', {qs: req.query});
+  console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
+  console.log(req.body);
+});
+
+app.listen(3000, '127.0.0.1');
 
 console.log('Listening port: 3000');
