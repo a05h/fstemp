@@ -8,6 +8,11 @@ module.exports = (app) => {
     console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
   });
 
+  app.get('/index', (req, res) => {
+    res.render('index', {thisPage: 'index'});
+    console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
+  });
+  
   app.get('/contacts', (req, res) => {
     res.render('contacts', {qs: req.query});
     console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
@@ -20,4 +25,10 @@ module.exports = (app) => {
     console.log(req.body);
   });
 
+  app.get('*', (req, res) => {
+    res.render('404', {qs: req.query});
+    console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
+    console.log(req.body);
+  });
+  
 };
