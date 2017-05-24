@@ -10,5 +10,5 @@ app.use(express.static('./public'));
 
 route(app);
 
-app.listen(3000, '127.0.0.1');
+app.listen(3000);
 console.log('Listening port: 3000');
