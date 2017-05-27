@@ -7,6 +7,7 @@ module.exports = () => {
   MongoClient.connect(url, (err, db) => {
     if (err) throw err;
     var collection = db.collection('nf');
+    //var index = require('../controllers/indexController.js');
     
     var data = {test: 'something'};
     
@@ -22,7 +23,7 @@ module.exports = () => {
       
       //show data
       collection.find().toArray((err, results) => {
-        console.dir(results);
+        console.log(results);
         db.close();
       });
       
