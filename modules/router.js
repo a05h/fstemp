@@ -30,6 +30,5 @@ module.exports = (app) => {
     res.render('404');
     console.log(`Request: ${req.url}, status: ${res.statusCode} - ${res.statusMessage}`);
   });
-
   
 };
